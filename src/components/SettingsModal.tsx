@@ -12,6 +12,12 @@ export const SettingsModal = ({ settings, onSettingsChange, onClose }: SettingsM
     onSettingsChange({ ...settings, [key]: value });
   };
 
+  // ✅ TEMP FIX: Function that reloads the page when saving
+  const handleSaveAndReload = () => {
+    onClose();
+    window.location.reload(); // 🔄 Reloads the app to fix input freeze
+  };
+
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-background border border-border rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl">
@@ -128,7 +134,7 @@ export const SettingsModal = ({ settings, onSettingsChange, onClose }: SettingsM
 
         <div className="sticky bottom-0 bg-background border-t border-border px-6 py-4">
           <button
-            onClick={onClose}
+            onClick={handleSaveAndReload}
             className="btn-primary w-full py-3 rounded-xl font-semibold"
           >
             Save & Close
@@ -139,16 +145,14 @@ export const SettingsModal = ({ settings, onSettingsChange, onClose }: SettingsM
   );
 };
 
-const SettingGroup = ({ title, children }: { title: string; children: React.ReactNode }) => {
-  return (
-    <div>
-      <h3 className="text-sm font-semibold text-secondary uppercase tracking-wide mb-3">
-        {title}
-      </h3>
-      {children}
-    </div>
-  );
-};
+const SettingGroup = ({ title, children }: { title: string; children: React.ReactNode }) => (
+  <div>
+    <h3 className="text-sm font-semibold text-secondary uppercase tracking-wide mb-3">
+      {title}
+    </h3>
+    {children}
+  </div>
+);
 
 const SettingButton = ({
   active,
@@ -158,20 +162,18 @@ const SettingButton = ({
   active: boolean;
   onClick: () => void;
   children: React.ReactNode;
-}) => {
-  return (
-    <button
-      onClick={onClick}
-      className={`py-3 px-4 rounded-lg font-medium transition-all ${
-        active
-          ? 'bg-accent text-white'
-          : 'bg-surface text-secondary hover:bg-surface-hover'
-      }`}
-    >
-      {children}
-    </button>
-  );
-};
+}) => (
+  <button
+    onClick={onClick}
+    className={`py-3 px-4 rounded-lg font-medium transition-all ${
+      active
+        ? 'bg-accent text-white'
+        : 'bg-surface text-secondary hover:bg-surface-hover'
+    }`}
+  >
+    {children}
+  </button>
+);
 
 const ToggleOption = ({
   label,
@@ -181,22 +183,20 @@ const ToggleOption = ({
   label: string;
   checked: boolean;
   onChange: (checked: boolean) => void;
-}) => {
-  return (
-    <label className="flex items-center justify-between p-4 bg-surface rounded-lg cursor-pointer hover:bg-surface-hover transition-colors">
-      <span className="text-primary font-medium">{label}</span>
+}) => (
+  <label className="flex items-center justify-between p-4 bg-surface rounded-lg cursor-pointer hover:bg-surface-hover transition-colors">
+    <span className="text-primary font-medium">{label}</span>
+    <div
+      className={`relative w-12 h-6 rounded-full transition-colors ${
+        checked ? 'bg-accent' : 'bg-border'
+      }`}
+      onClick={() => onChange(!checked)}
+    >
       <div
-        className={`relative w-12 h-6 rounded-full transition-colors ${
-          checked ? 'bg-accent' : 'bg-border'
+        className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${
+          checked ? 'translate-x-6' : 'translate-x-0'
         }`}
-        onClick={() => onChange(!checked)}
-      >
-        <div
-          className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${
-            checked ? 'translate-x-6' : 'translate-x-0'
-          }`}
-        />
-      </div>
-    </label>
-  );
-};
+      />
+    </div>
+  </label>
+);
