@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-primary: 15 23 42;
+    --bg-surface: 30 41 59;
+    --bg-surface-hover: 51 65 85;
+    --text-primary: 248 250 252;
+    --text-secondary: 148 163 184;
+    --text-correct: 34 197 94;
+    --text-incorrect: 239 68 68;
+    --accent: 14 165 233;
+    --border: 51 65 85;
+  }
+
+  [data-theme='light'] {
+    --bg-primary: 248 250 252;
+    --bg-surface: 241 245 249;
+    --bg-surface-hover: 226 232 240;
+    --text-primary: 15 23 42;
+    --text-secondary: 100 116 139;
+    --text-correct: 34 197 94;
+    --text-incorrect: 239 68 68;
+    --accent: 14 165 233;
+    --border: 226 232 240;
+  }
+
+  [data-theme='neon'] {
+    --bg-primary: 10 10 20;
+    --bg-surface: 20 20 35;
+    --bg-surface-hover: 30 30 50;
+    --text-primary: 255 255 255;
+    --text-secondary: 147 197 253;
+    --text-correct: 52 211 153;
+    --text-incorrect: 251 113 133;
+    --accent: 139 92 246;
+    --border: 109 40 217;
+  }
+
+  [data-font='sans'] {
+    --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  [data-font='mono'] {
+    --font-display: 'JetBrains Mono', 'Courier New', monospace;
+  }
+
+  [data-font='handwriting'] {
+    --font-display: 'Caveat', cursive;
+  }
+
+  body {
+    @apply antialiased;
+    background: rgb(var(--bg-primary));
+    color: rgb(var(--text-primary));
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  * {
+    @apply focus:outline-none;
+  }
+}
+
+@layer components {
+  .text-display {
+    font-family: var(--font-display);
+    @apply text-3xl;
+  }
+
+  .text-primary {
+    color: rgb(var(--text-primary));
+  }
+
+  .text-secondary {
+    color: rgb(var(--text-secondary));
+  }
+
+  .text-correct {
+    color: rgb(var(--text-correct));
+  }
+
+  .text-incorrect {
+    color: rgb(var(--text-incorrect));
+  }
+
+  .text-accent {
+    color: rgb(var(--accent));
+  }
+
+  .bg-background {
+    background: rgb(var(--bg-primary));
+  }
+
+  .bg-surface {
+    background: rgb(var(--bg-surface));
+  }
+
+  .bg-surface-hover {
+    background: rgb(var(--bg-surface-hover));
+  }
+
+  .bg-accent {
+    background: rgb(var(--accent));
+  }
+
+  .border-border {
+    border-color: rgb(var(--border));
+  }
+
+  .btn-primary {
+    @apply bg-accent text-white hover:opacity-90 transition-all;
+  }
+
+  .btn-secondary {
+    @apply bg-surface text-primary hover:bg-surface-hover transition-all border border-border;
+  }
+
+  .char-active::after {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgb(var(--accent));
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink {
+    0%, 50% {
+      opacity: 1;
+    }
+    51%, 100% {
+      opacity: 0;
+    }
+  }
+  
+}
+
