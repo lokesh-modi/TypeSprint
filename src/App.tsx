@@ -6,7 +6,7 @@ import { SettingsModal } from './components/SettingsModal';
 import { useTypingTest } from './hooks/useTypingTest';
 import { loadSettings, saveSettings, loadBestWPM } from './utils/storage';
 import { Settings } from './types';
-
+import { Heart } from 'lucide-react';
 function App() {
   const [settings, setSettings] = useState<Settings>(loadSettings());
   const [showSettings, setShowSettings] = useState(false);
@@ -90,6 +90,8 @@ function App() {
           <span>•</span>
           <span>Esc to reset</span>
         </div>
+        <p>Made with <Heart className="inline text-red-500 mx-1" size={16} /> by Lokesh Modi</p>
+
       </footer>
 
       {showSettings && (
